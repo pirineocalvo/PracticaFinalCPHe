@@ -9,6 +9,7 @@ import com.pFinCPHe.controller.IMainController;
 import com.pFinCPHe.view.LoginView;
 import com.pFinCPHe.view.MainView;
 import com.pFinCPHe.view.RegisterView;
+import com.pFinCPHe.view.UserView;
 
 public class Main {
 
@@ -16,7 +17,8 @@ public class Main {
 		RegisterView registerView = new RegisterView();
 		LoginView loginView = new LoginView();
 		MainView mainView = new MainView();
-		IMainController mainController = new MainController(mainView, registerView, loginView);
+		UserView userView = new UserView();
+		IMainController mainController = new MainController(mainView, registerView, loginView, userView);
 		
 		mainController.showMainView();
 	}

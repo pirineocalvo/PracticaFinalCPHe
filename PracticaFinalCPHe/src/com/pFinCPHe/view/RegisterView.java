@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.HeadlessException;
 
 import javax.swing.SwingConstants;
 
@@ -15,8 +14,6 @@ import com.pFinCPHe.controller.IMainController;
 import com.pFinCPHe.model.entities.User;
 
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.UUID;
 import java.awt.event.ActionEvent;
 
 public class RegisterView extends JPanel {
@@ -62,26 +59,31 @@ public class RegisterView extends JPanel {
 		add(passwordLabel);
 		
 		userField = new JTextField("");
+		userField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		userField.setBounds(447, 175, 369, 39);
 		add(userField);
 		userField.setColumns(10);
 		
 		passwordField = new JTextField("");
+		passwordField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordField.setColumns(10);
 		passwordField.setBounds(447, 255, 369, 39);
 		add(passwordField);
 		
 		cancelButton = new JButton("CANCELAR");
-		cancelButton.setFont(new Font("Microsoft Tai Le", Font.PLAIN, 14));
+		cancelButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		cancelButton.setBounds(587, 462, 199, 39);
 		add(cancelButton);
 		cancelButton.addActionListener(e -> mainController.showMainView());
 		
 		submitButton = new JButton("CONFIRMAR");
-		submitButton.setFont(new Font("Microsoft Tai Le", Font.PLAIN, 14));
+		submitButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		submitButton.setBounds(326, 462, 199, 39);
 		add(submitButton);
-		submitButton.addActionListener(e -> actionPerformed(e));
+		submitButton.addActionListener(e -> {
+			actionPerformed(e);
+			mainController.showUserView();
+		});
 		
 		JLabel confirmPasswordLabel = new JLabel("Confirmar contraseña");
 		confirmPasswordLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -91,6 +93,7 @@ public class RegisterView extends JPanel {
 		add(confirmPasswordLabel);
 		
 		passwordConfirmField = new JTextField("");
+		passwordConfirmField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordConfirmField.setColumns(10);
 		passwordConfirmField.setBounds(447, 335, 369, 39);
 		add(passwordConfirmField);

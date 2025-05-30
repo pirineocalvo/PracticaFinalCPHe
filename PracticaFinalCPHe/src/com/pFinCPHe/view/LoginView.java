@@ -4,27 +4,33 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+
 import javax.swing.SwingConstants;
 
 import com.pFinCPHe.controller.IMainController;
+import com.pFinCPHe.model.entities.User;
+
 import javax.swing.JButton;
 
 public class LoginView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private IMainController mainController;
-	private JTextField userNameField;
-	private JTextField passwordField;
-
+	private static IMainController mainController;
+	private static JTextField userNameField;
+	private static JTextField passwordField;
+	private static JButton confirmButton;
+	private static JButton cancelButton;
+	
 	public LoginView() {
 		setBackground(new Color(14, 77, 100));
 		setLayout(null);
 		
-		JButton cancelButton = new JButton("CANCELAR");
-		cancelButton.setFont(new Font("Microsoft Tai Le", Font.PLAIN, 14));
+		cancelButton = new JButton("CANCELAR");
+		cancelButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		cancelButton.setBounds(577, 517, 199, 39);
 		add(cancelButton);
 		cancelButton.addActionListener(e -> mainController.showMainView());
@@ -36,10 +42,14 @@ public class LoginView extends JPanel {
 		rewelcomeMessage.setBounds(200, 51, 681, 54);
 		add(rewelcomeMessage);
 		
-		JButton confirmButton = new JButton("CONFIRMAR");
-		confirmButton.setFont(new Font("Microsoft Tai Le", Font.PLAIN, 14));
+		confirmButton = new JButton("CONFIRMAR");
+		confirmButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		confirmButton.setBounds(308, 517, 199, 39);
 		add(confirmButton);
+		confirmButton.addActionListener(e -> {
+			actionPerformed(e);
+			mainController.showUserView();
+		});
 		
 		JLabel userNameLabel = new JLabel("Nombre de usuario");
 		userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -55,15 +65,54 @@ public class LoginView extends JPanel {
 		passwordLabel.setBounds(223, 357, 263, 54);
 		add(passwordLabel);
 		
-		userNameField = new JTextField();
+		userNameField = new JTextField("");
+		userNameField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		userNameField.setColumns(10);
 		userNameField.setBounds(465, 258, 369, 39);
 		add(userNameField);
 		
-		passwordField = new JTextField();
+		passwordField = new JTextField("");
+		passwordField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordField.setColumns(10);
 		passwordField.setBounds(465, 367, 369, 39);
 		add(passwordField);
+	}
+	
+	public static void actionPerformed(ActionEvent e){
+		if (e.getSource() == confirmButton) {
+			String username = userNameField.getText();
+			String password = passwordField.getText();
+
+			if (username.isBlank() || password.isBlank()) {
+				JOptionPane.showMessageDialog(null,
+						"Username o Password están vacíos",
+						"Inicio de sesión",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			User user = new User(username, password, null);
+
+			boolean result = mainController.login(user);
+
+			if (result) {
+				JOptionPane.showMessageDialog(null, "¡Inicio de sesión correcto!",
+						"Inicio de sesión",
+						JOptionPane.PLAIN_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Username o Password inválido",
+						"Inicio de sesión",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} else if (e.getSource() == cancelButton) {
+			mainController.showMainView();
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Accionador no controlado",
+					"Inicio de sesión",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public void setMainController(IMainController mainController) {

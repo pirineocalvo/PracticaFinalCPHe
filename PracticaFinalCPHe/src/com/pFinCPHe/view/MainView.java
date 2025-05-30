@@ -1,7 +1,5 @@
 package com.pFinCPHe.view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,7 +8,6 @@ import com.pFinCPHe.controller.IMainController;
 
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -34,7 +31,7 @@ public class MainView extends JFrame {
 		mainPanel.setForeground(new Color(255, 255, 255));
 		mainPanel.setBackground(new Color(14, 77, 100));
 		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setResizable(false);
 		setContentPane(mainPanel);
 		showFirstView();
 		}
@@ -51,12 +48,12 @@ public class MainView extends JFrame {
 		mainPanel.add(appTitle);
 		
 		JButton registerButton = new JButton("REGISTRARSE");
-		registerButton.setFont(new Font("Microsoft Tai Le", Font.BOLD, 17));
+		registerButton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 17));
 		registerButton.setBounds(390, 356, 347, 68);
 		mainPanel.add(registerButton);
 		
 		JButton loginButton = new JButton("INICIAR SESIÓN");
-		loginButton.setFont(new Font("Microsoft Tai Le", Font.BOLD, 17));
+		loginButton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 17));
 		loginButton.setBounds(390, 240, 347, 68);
 		mainPanel.add(loginButton);
 		

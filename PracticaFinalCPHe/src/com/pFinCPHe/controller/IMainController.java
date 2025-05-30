@@ -7,4 +7,6 @@ public interface IMainController {
 	void showLoginView();
 	void showMainView();
 	boolean register(User user);
+	boolean login(User user);
+	void showUserView();
 }
