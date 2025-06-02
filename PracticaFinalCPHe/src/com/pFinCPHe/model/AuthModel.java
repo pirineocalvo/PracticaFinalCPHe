@@ -8,15 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import com.pFinCPHe.model.entities.User;
 
 public class AuthModel implements IAuthModel {
 
 	private Connection connection;
+	private StrongPasswordEncryptor passwordEncryptor;
 	
 	public AuthModel() throws ClassNotFoundException, SQLException, IOException {
 		
 		this.connection = DatabaseConnection.getConnection();
+		this.passwordEncryptor= new StrongPasswordEncryptor();
 	}
 	
 	public boolean register(User user) {
@@ -36,23 +40,20 @@ public class AuthModel implements IAuthModel {
 	}
 	
 	public boolean login(User user) {
-		String query = "SELECT name, password FROM users WHERE name like ?";
+		String query = "SELECT name, password, uuid FROM users WHERE name like ?";
 		
 		try {
 			PreparedStatement ps2 = connection.prepareStatement(query);
 
 			ps2.setString(1, user.getName());
 			
+			
 			ResultSet rs = ps2.executeQuery();
 			
 			if (rs.next()) {
-	            System.out.println("Si encontrado");
-				String nameDb = rs.getString(1);
 				String password = rs.getString(2);
-				UUID uuid =bytesToUUID(rs.getBytes(3));
-
-				user = new User(nameDb, password, uuid);
-				return true;
+				boolean result = passwordEncryptor.checkPassword(user.getPassword(), password);
+				return result;
 			} else {
 	            return false;
 	        }
@@ -60,13 +61,11 @@ public class AuthModel implements IAuthModel {
             return false;
 		}
 	}
-
-
+	
 	public static UUID bytesToUUID(byte[] bytes) {
 	    ByteBuffer bb = ByteBuffer.wrap(bytes);
 	    long high = bb.getLong();
 	    long low = bb.getLong();
 	    return new UUID(high, low);
 	}
-	
 }

@@ -82,7 +82,6 @@ public class RegisterView extends JPanel {
 		add(submitButton);
 		submitButton.addActionListener(e -> {
 			actionPerformed(e);
-			mainController.showUserView();
 		});
 		
 		JLabel confirmPasswordLabel = new JLabel("Confirmar contraseña");
@@ -116,6 +115,17 @@ public class RegisterView extends JPanel {
 		compulsaryLabel3.setBounds(826, 331, 46, 14);
 		add(compulsaryLabel3);
 		
+		JLabel userInformation = new JLabel("<html>"
+												+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REQUESITOS"
+												+ "<ul>"
+													+ "<li>Nombre de usuario: Máximo 15 caracteres</li>"
+													+ "<li>Contraseña: Máximo 100 caracteres</li>"
+												+ "</ul>"
+											+ "</html>");
+		userInformation.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 12));
+		userInformation.setBounds(854, 175, 284, 112);
+		add(userInformation);
+		
 	}
 	
 	public static void actionPerformed(ActionEvent e){
@@ -148,6 +158,7 @@ public class RegisterView extends JPanel {
 				JOptionPane.showMessageDialog(null, "¡Registro correcto!",
 						"Registro",
 						JOptionPane.PLAIN_MESSAGE);
+				mainController.showUserView();
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Username o Password inválido",
@@ -166,6 +177,6 @@ public class RegisterView extends JPanel {
 
 	
 	public void setMainController(IMainController mainController) {
-		this.mainController=mainController;
+		RegisterView.mainController=mainController;
 	}
 }

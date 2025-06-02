@@ -48,7 +48,6 @@ public class LoginView extends JPanel {
 		add(confirmButton);
 		confirmButton.addActionListener(e -> {
 			actionPerformed(e);
-			mainController.showUserView();
 		});
 		
 		JLabel userNameLabel = new JLabel("Nombre de usuario");
@@ -99,6 +98,7 @@ public class LoginView extends JPanel {
 				JOptionPane.showMessageDialog(null, "¡Inicio de sesión correcto!",
 						"Inicio de sesión",
 						JOptionPane.PLAIN_MESSAGE);
+				mainController.showUserView();
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Username o Password inválido",
@@ -116,7 +116,7 @@ public class LoginView extends JPanel {
 	}
 	
 	public void setMainController(IMainController mainController) {
-		this.mainController=mainController;
+		LoginView.mainController=mainController;
 	}
 
 }
