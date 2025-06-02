@@ -6,10 +6,19 @@ import java.sql.SQLException;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import com.pFinCPHe.model.AuthModel;
+import com.pFinCPHe.model.CarModel;
 import com.pFinCPHe.model.IAuthModel;
+import com.pFinCPHe.model.ICarModel;
+import com.pFinCPHe.model.entities.Car;
 import com.pFinCPHe.model.entities.User;
+import com.pFinCPHe.view.AddOutlayView;
+import com.pFinCPHe.view.CarsView;
+import com.pFinCPHe.view.CreateView;
+import com.pFinCPHe.view.DeleteView;
+import com.pFinCPHe.view.EditView;
 import com.pFinCPHe.view.LoginView;
 import com.pFinCPHe.view.MainView;
+import com.pFinCPHe.view.OutlayView;
 import com.pFinCPHe.view.RegisterView;
 import com.pFinCPHe.view.UserView;
 
@@ -20,19 +29,42 @@ public class MainController implements IMainController{
 	private StrongPasswordEncryptor passwordEncryptor;
 	private IAuthModel authModel;
 	private UserView userView;
+	private CreateView createView;
+	private EditView editView;
+	private DeleteView deleteView;
+	private CarsView carsView;
+	private AddOutlayView addOutlayView;
+	private OutlayView outlayView;
+	private ICarModel carModel;
 
 	
-	public MainController(MainView mainView, RegisterView registerView, LoginView loginView, UserView userView) throws ClassNotFoundException, SQLException, IOException {
+	public MainController(MainView mainView, RegisterView registerView, LoginView loginView, 
+								UserView userView, 
+									CreateView createView, EditView editView, DeleteView deleteView, CarsView carsView, AddOutlayView addOutlayView, OutlayView outlayView
+						) throws ClassNotFoundException, SQLException, IOException {
 		mainView.setMainController(this);
 		loginView.setMainController(this);
 		registerView.setMainController(this);
 		userView.setMainController(this);
+		createView.setMainController(this);
+		editView.setMainController(this);
+		deleteView.setMainController(this);
+		carsView.setMainController(this);
+		addOutlayView.setMainController(this);
+		outlayView.setMainController(this);
 		this.mainView=mainView;
 		this.loginView=loginView;
 		this.registerView=registerView;
 		this.userView=userView;
+		this.createView=createView;
+		this.editView=editView;
+		this.deleteView=deleteView;
+		this.carsView=carsView;
+		this.addOutlayView=addOutlayView;
+		this.outlayView=outlayView;
 		this.passwordEncryptor = new StrongPasswordEncryptor();
 		this.authModel = new AuthModel();
+		this.carModel = new CarModel();
 	}
 	
 	public void showMainView() {
@@ -51,6 +83,30 @@ public class MainController implements IMainController{
 		mainView.setContentPanel(userView);
 	}
 	
+	public void showCreateView() {
+		mainView.setContentPanel(createView);
+	}
+	
+	public void showEditView() {
+		mainView.setContentPanel(editView);
+	}
+	
+	public void showDeleteView() {
+		mainView.setContentPanel(deleteView);
+	}
+	
+	public void showCarsView() {
+		mainView.setContentPanel(carsView);
+	}
+	
+	public void showAddOutlayView() {
+		mainView.setContentPanel(addOutlayView);
+	}
+	
+	public void showOutlayView() {
+		mainView.setContentPanel(outlayView);
+	}
+	
 	public boolean register(User user) {
 		String encrypted = this.passwordEncryptor.encryptPassword(user.getPassword());
 
@@ -66,4 +122,8 @@ public class MainController implements IMainController{
 		return result;
 	}
 	
+	public boolean create(Car car) {
+		boolean result = this.carModel.create(car);
+		return result;
+	}
 }

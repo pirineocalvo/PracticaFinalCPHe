@@ -29,26 +29,32 @@ public class UserView extends JPanel {
 		JButton createButton = new JButton("CREAR COCHE");
 		createButton.setBounds(300, 108, 523, 42);
 		add(createButton);
+		createButton.addActionListener(e -> mainController.showCreateView());
 		
 		JButton editButton = new JButton("EDITAR COCHES");
 		editButton.setBounds(300, 187, 523, 42);
 		add(editButton);
+		editButton.addActionListener(e -> mainController.showEditView());
 		
 		JButton deleteButton = new JButton("BORRAR COCHES");
 		deleteButton.setBounds(300, 265, 523, 42);
 		add(deleteButton);
+		deleteButton.addActionListener(e -> mainController.showDeleteView());
 		
 		JButton showCarsButton = new JButton("TUS COCHES");
 		showCarsButton.setBounds(300, 343, 523, 42);
 		add(showCarsButton);
+		showCarsButton.addActionListener(e -> mainController.showCarsView());
 		
 		JButton addOutlayButton = new JButton("AÑADIR GASTOS");
 		addOutlayButton.setBounds(300, 459, 523, 42);
 		add(addOutlayButton);
+		addOutlayButton.addActionListener(e -> mainController.showAddOutlayView());
 		
 		JButton showOutlayButton = new JButton("TUS GASTOS");
 		showOutlayButton.setBounds(300, 536, 523, 42);
 		add(showOutlayButton);
+		showOutlayButton.addActionListener(e -> mainController.showOutlayView());
 		
 		JButton returnButton = new JButton("VOLVER");
 		returnButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));

@@ -80,9 +80,7 @@ public class RegisterView extends JPanel {
 		submitButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		submitButton.setBounds(326, 462, 199, 39);
 		add(submitButton);
-		submitButton.addActionListener(e -> {
-			actionPerformed(e);
-		});
+		submitButton.addActionListener(e -> actionPerformed(e));
 		
 		JLabel confirmPasswordLabel = new JLabel("Confirmar contraseña");
 		confirmPasswordLabel.setHorizontalAlignment(SwingConstants.LEFT);

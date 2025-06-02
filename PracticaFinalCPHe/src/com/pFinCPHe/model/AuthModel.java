@@ -1,7 +1,6 @@
 package com.pFinCPHe.model;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,19 +52,17 @@ public class AuthModel implements IAuthModel {
 			if (rs.next()) {
 				String password = rs.getString(2);
 				boolean result = passwordEncryptor.checkPassword(user.getPassword(), password);
-				return result;
+				if (result) {
+	                user.setUuid(UUID.fromString(rs.getString("uuid")));
+	                return true;
+	            } else {
+	                return false;
+	            }
 			} else {
 	            return false;
 	        }
 		} catch (Exception e) {
             return false;
 		}
-	}
-	
-	public static UUID bytesToUUID(byte[] bytes) {
-	    ByteBuffer bb = ByteBuffer.wrap(bytes);
-	    long high = bb.getLong();
-	    long low = bb.getLong();
-	    return new UUID(high, low);
 	}
 }

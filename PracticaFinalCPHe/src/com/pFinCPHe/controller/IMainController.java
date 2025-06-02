@@ -1,5 +1,6 @@
 package com.pFinCPHe.controller;
 
+import com.pFinCPHe.model.entities.Car;
 import com.pFinCPHe.model.entities.User;
 
 public interface IMainController {
@@ -9,4 +10,11 @@ public interface IMainController {
 	boolean register(User user);
 	boolean login(User user);
 	void showUserView();
+	void showCreateView();
+	void showEditView();
+	void showDeleteView();
+	void showCarsView();
+	void showAddOutlayView();
+	void showOutlayView();
+	boolean create(Car car);
 }
