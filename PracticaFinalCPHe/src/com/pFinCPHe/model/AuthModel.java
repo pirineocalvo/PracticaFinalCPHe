@@ -39,8 +39,8 @@ public class AuthModel implements IAuthModel {
 	}
 	
 	public boolean login(User user) {
-		String query = "SELECT name, password, uuid FROM users WHERE name like ?";
-		
+		String query = "SELECT name, password, BIN_TO_UUID(uuid) FROM users WHERE name like ?";
+		boolean result=false;
 		try {
 			PreparedStatement ps2 = connection.prepareStatement(query);
 
@@ -51,16 +51,11 @@ public class AuthModel implements IAuthModel {
 			
 			if (rs.next()) {
 				String password = rs.getString(2);
-				boolean result = passwordEncryptor.checkPassword(user.getPassword(), password);
-				if (result) {
-	                user.setUuid(UUID.fromString(rs.getString("uuid")));
-	                return true;
-	            } else {
-	                return false;
-	            }
-			} else {
-	            return false;
-	        }
+				result = passwordEncryptor.checkPassword(user.getPassword(), password);
+				user.setUuid(UUID.fromString(rs.getString(3)));
+				user.setPassword(null);
+			}
+			return result;
 		} catch (Exception e) {
             return false;
 		}

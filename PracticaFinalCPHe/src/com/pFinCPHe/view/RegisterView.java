@@ -74,7 +74,7 @@ public class RegisterView extends JPanel {
 		cancelButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		cancelButton.setBounds(587, 462, 199, 39);
 		add(cancelButton);
-		cancelButton.addActionListener(e -> mainController.showMainView());
+		cancelButton.addActionListener(e -> actionPerformed(e));
 		
 		submitButton = new JButton("CONFIRMAR");
 		submitButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
@@ -157,6 +157,9 @@ public class RegisterView extends JPanel {
 						"Registro",
 						JOptionPane.PLAIN_MESSAGE);
 				mainController.showUserView();
+				userField.setText("");
+				passwordField.setText("");
+				passwordConfirmField.setText("");
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Username o Password inválido",
@@ -164,6 +167,9 @@ public class RegisterView extends JPanel {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource() == cancelButton) {
+			userField.setText("");
+			passwordField.setText("");
+			passwordConfirmField.setText("");
 			mainController.showMainView();
 		} else {
 			JOptionPane.showMessageDialog(null,

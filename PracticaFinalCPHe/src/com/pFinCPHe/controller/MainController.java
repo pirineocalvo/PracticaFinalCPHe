@@ -36,6 +36,7 @@ public class MainController implements IMainController{
 	private AddOutlayView addOutlayView;
 	private OutlayView outlayView;
 	private ICarModel carModel;
+	private User currentUser;
 
 	
 	public MainController(MainView mainView, RegisterView registerView, LoginView loginView, 
@@ -125,5 +126,30 @@ public class MainController implements IMainController{
 	public boolean create(Car car) {
 		boolean result = this.carModel.create(car);
 		return result;
+	}
+	
+	public boolean edit(Car modifiedCar) {
+		boolean result = this.carModel.edit(modifiedCar);
+		return result;
+	}
+	
+	public Car findCarByPlate(String plate) throws Exception {
+		return this.carModel.findCarByPlate(plate);
+	}
+	
+	public boolean addNewOwner(Car modifiedCar) {
+		return this.carModel.addNewOwner(modifiedCar);
+	}
+	
+	/*public void showCarTable() {
+		this.carModel.showCarTable();
+	}*/
+	
+	public void setCurrentUser(User user) {
+	    this.currentUser = user;
+	}
+
+	public User getCurrentUser() {
+	    return currentUser;
 	}
 }

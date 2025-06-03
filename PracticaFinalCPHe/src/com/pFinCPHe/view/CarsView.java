@@ -22,6 +22,7 @@ public class CarsView extends JPanel {
 		returnButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		returnButton.setBounds(531, 646, 118, 23);
 		add(returnButton);
+		returnButton.addActionListener(e -> mainController.showUserView());
 		
 		JLabel lblTusCoches = new JLabel("TUS COCHES");
 		lblTusCoches.setHorizontalAlignment(SwingConstants.CENTER);
@@ -29,7 +30,14 @@ public class CarsView extends JPanel {
 		lblTusCoches.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 40));
 		lblTusCoches.setBounds(293, 22, 560, 49);
 		add(lblTusCoches);
-		returnButton.addActionListener(e -> mainController.showUserView());
+		
+		/*JLabel carsLabel = new JLabel(mainController.showCarTable());
+		carsLabel.setVerticalAlignment(SwingConstants.TOP);
+		carsLabel.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 12));
+		carsLabel.setOpaque(true);
+		carsLabel.setBounds(236, 124, 658, 460);
+		add(carsLabel);
+		*/
 
 	}
 

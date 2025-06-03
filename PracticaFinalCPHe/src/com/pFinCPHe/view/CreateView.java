@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import com.pFinCPHe.controller.IMainController;
 import com.pFinCPHe.model.entities.Car;
-import com.pFinCPHe.model.entities.User;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -85,7 +84,7 @@ public class CreateView extends JPanel {
 		returnButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 16));
 		returnButton.setBounds(576, 513, 154, 36);
 		add(returnButton);
-		returnButton.addActionListener(e -> mainController.showUserView());
+		returnButton.addActionListener(e -> actionPerformed(e));
 
 	}
 	
@@ -94,7 +93,7 @@ public class CreateView extends JPanel {
 			String brand = brandField.getText();
 			String plate = plateField.getText();
 			Date yearProduction = Date.valueOf(yearField.getText()+"-01-01");
-			UUID uuid= user.getUuid();
+			UUID uuid= mainController.getCurrentUser().getUuid();
 			
 			if (brand.isBlank() || plate.isBlank() || yearField==null) {
 				JOptionPane.showMessageDialog(null,
@@ -113,6 +112,9 @@ public class CreateView extends JPanel {
 						"Crear coche",
 						JOptionPane.PLAIN_MESSAGE);
 				mainController.showUserView();
+				brandField.setText("");
+			    plateField.setText("");
+			    yearField.setText("");
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Ha ocurrido un error",
@@ -120,7 +122,10 @@ public class CreateView extends JPanel {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource() == returnButton) {
-			mainController.showMainView();
+			brandField.setText("");
+		    plateField.setText("");
+		    yearField.setText("");
+			mainController.showUserView();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Accionador no controlado",

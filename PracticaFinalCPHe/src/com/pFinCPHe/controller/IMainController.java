@@ -17,4 +17,10 @@ public interface IMainController {
 	void showAddOutlayView();
 	void showOutlayView();
 	boolean create(Car car);
+	void setCurrentUser(User user);
+	User getCurrentUser();
+	boolean edit(Car car);
+	Car findCarByPlate(String plate) throws Exception;
+	boolean addNewOwner(Car modifiedCar);
+	//void showCarTable();
 }

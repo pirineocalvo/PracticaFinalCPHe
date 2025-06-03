@@ -33,7 +33,7 @@ public class LoginView extends JPanel {
 		cancelButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		cancelButton.setBounds(577, 517, 199, 39);
 		add(cancelButton);
-		cancelButton.addActionListener(e -> mainController.showMainView());
+		cancelButton.addActionListener(e -> actionPerformed(e));   
 		
 		JLabel rewelcomeMessage = new JLabel("Bienvenido de nuevo, inicia sesión");
 		rewelcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -46,9 +46,7 @@ public class LoginView extends JPanel {
 		confirmButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 14));
 		confirmButton.setBounds(308, 517, 199, 39);
 		add(confirmButton);
-		confirmButton.addActionListener(e -> {
-			actionPerformed(e);
-		});
+		confirmButton.addActionListener(e -> actionPerformed(e));
 		
 		JLabel userNameLabel = new JLabel("Nombre de usuario");
 		userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,7 +96,9 @@ public class LoginView extends JPanel {
 				JOptionPane.showMessageDialog(null, "¡Inicio de sesión correcto!",
 						"Inicio de sesión",
 						JOptionPane.PLAIN_MESSAGE);
+				mainController.setCurrentUser(user);
 				mainController.showUserView();
+				passwordField.setText("");
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Username o Password inválido",
@@ -106,6 +106,7 @@ public class LoginView extends JPanel {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource() == cancelButton) {
+			passwordField.setText("");
 			mainController.showMainView();
 		} else {
 			JOptionPane.showMessageDialog(null,
