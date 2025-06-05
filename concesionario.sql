@@ -11,9 +11,7 @@ CREATE TABLE `users` (
 CREATE TABLE `cars` (
     brand VARCHAR(20),
     plate VARCHAR(8) PRIMARY KEY,
-    yearProduction DATE,
-    uuid BINARY(16),
-    FOREIGN KEY (uuid) REFERENCES `users`(uuid)
+    yearProduction DATE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `outlays`(
@@ -36,8 +34,8 @@ CREATE TABLE `cars_owners`(
 )ENGINE=InnoDB;
 
 SELECT name, password, BIN_TO_UUID(uuid) AS uuid FROM users;
--- SELECT * FROM users;
-SELECT brand, plate, yearProduction, BIN_TO_UUID(uuid) as uuid FROM cars;
+SELECT * FROM cars;
+SELECT name, password, BIN_TO_UUID(uuid) as uuid FROM users;
 SELECT BIN_TO_UUID(uuid) as uuid, plate FROM cars_owners;
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM cars_owners;
