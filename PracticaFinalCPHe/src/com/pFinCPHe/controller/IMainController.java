@@ -1,5 +1,7 @@
 package com.pFinCPHe.controller;
 
+import java.util.UUID;
+
 import com.pFinCPHe.model.entities.Car;
 import com.pFinCPHe.model.entities.User;
 
@@ -22,5 +24,5 @@ public interface IMainController {
 	boolean edit(Car car);
 	Car findCarByPlate(String plate) throws Exception;
 	boolean addNewOwner(Car modifiedCar);
-	//void showCarTable();
+	String showCarTable(UUID uuid);
 }

@@ -2,6 +2,7 @@ package com.pFinCPHe.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -141,15 +142,15 @@ public class MainController implements IMainController{
 		return this.carModel.addNewOwner(modifiedCar);
 	}
 	
-	/*public void showCarTable() {
-		this.carModel.showCarTable();
-	}*/
-	
 	public void setCurrentUser(User user) {
 	    this.currentUser = user;
 	}
 
 	public User getCurrentUser() {
 	    return currentUser;
+	}
+	
+	public String showCarTable(UUID uuid) {
+		return this.carModel.showCarTable(uuid);
 	}
 }
