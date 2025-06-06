@@ -10,4 +10,5 @@ public interface ICarModel {
 	Car findCarByPlate(String plate) throws Exception;
 	boolean addNewOwner(Car modifiedCar);
 	String showCarTable(UUID uuid);
+	boolean delete(Car deletedCar);
 }

@@ -135,6 +135,25 @@ public class CarModel implements ICarModel{
 			return "<b>Error al obtener los coches.</b>";
 		}
 	}
+
+	public boolean delete(Car deletedCar) {
+	    try {
+	        String query1 = "DELETE FROM cars_owners WHERE plate = ?";
+	        PreparedStatement ps1 = connection.prepareStatement(query1);
+	        ps1.setString(1, deletedCar.getPlate());
+	        ps1.executeUpdate();
+
+	        String query2 = "DELETE FROM cars WHERE plate = ?";
+	        PreparedStatement ps2 = connection.prepareStatement(query2);
+	        ps2.setString(1, deletedCar.getPlate());
+	        ps2.executeUpdate();
+
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
+	}
+
 	
 	
 }

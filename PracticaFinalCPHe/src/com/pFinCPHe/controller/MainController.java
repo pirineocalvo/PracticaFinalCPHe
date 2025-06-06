@@ -135,6 +135,11 @@ public class MainController implements IMainController{
 		return result;
 	}
 	
+	public boolean delete(Car deletedCar) {
+		boolean result = this.carModel.delete(deletedCar);
+		return result;
+	}
+	
 	public Car findCarByPlate(String plate) throws Exception {
 		return this.carModel.findCarByPlate(plate);
 	}
