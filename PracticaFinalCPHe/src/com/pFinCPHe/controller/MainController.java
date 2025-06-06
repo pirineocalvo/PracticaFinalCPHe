@@ -98,6 +98,7 @@ public class MainController implements IMainController{
 	}
 	
 	public void showCarsView() {
+		carsView.refreshCarList();
 		mainView.setContentPanel(carsView);
 	}
 	

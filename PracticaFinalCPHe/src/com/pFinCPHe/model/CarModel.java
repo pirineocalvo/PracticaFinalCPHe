@@ -94,9 +94,46 @@ public class CarModel implements ICarModel{
 
 	@Override
 	public String showCarTable(UUID uuid) {
-		String query = "SELECT cars.brand, cars.plate, cars.yearProduction, BIN_TO_UUID(cars_owners.uuid) as uuid FROM cars INNER JOIN cars_owners ON cars.plate = cars_owners.plate WHERE cars_owners.uuid = ?";
+		StringBuilder result = new StringBuilder();
 		
-		return query;
+		String query = "SELECT cars.brand, cars.plate, cars.yearProduction FROM cars INNER JOIN cars_owners ON cars.plate = cars_owners.plate WHERE cars_owners.uuid = UUID_TO_BIN(?)";
+		
+		try {
+			PreparedStatement ps6 = connection.prepareStatement(query);
+			
+			ps6.setString(1, uuid.toString());
+			
+		    ResultSet rs = ps6.executeQuery();
+		    
+		    result.append("<table border='1' cellspacing='0' cellpadding='4'>");
+            result.append("<tr><th>Marca</th><th>Matrícula</th><th>Año de producción</th></tr>");
+            
+            boolean hasRows = false;
+            
+		    while (rs.next()) {
+		    	hasRows=true;
+		            String brand = rs.getString("brand");
+		            String plate = rs.getString("plate");
+		            Date year = rs.getDate("yearProduction");
+		            
+		            result.append("<tr>")
+	                  .append("<td>").append(brand).append("</td>")
+	                  .append("<td>").append(plate).append("</td>")
+	                  .append("<td>").append(year.toString()).append("</td>")
+	                  .append("</tr>");
+		        }
+		    
+		    result.append("</table>");
+		    
+		    if (!hasRows) {
+		    	return "<i>No tienes coches registrados</i>";
+		    }
+
+			return result.toString();
+			
+		} catch (SQLException e) {
+			return "<b>Error al obtener los coches.</b>";
+		}
 	}
 	
 	
