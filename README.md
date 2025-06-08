@@ -6,5 +6,5 @@
 - Finalmente, despliega el proyecto en el Proyect Explorer, localiza el Main.java, clic derecho sobre él y Run As-> Java Application
 
 ### Paquetes necesarios: 
-Este link te redirecciona a un drive con las versiones de jasypt y mysql-connector exactas para el proyecto. 
+Este link te redirecciona a un drive con las versiones de jasypt y mysql-connector exactas para el proyecto. Se encuentran en la carpeta libs.
 https://drive.google.com/drive/folders/13huduxYea_ZIueQ5Bcayc0RxYvqvjFxR?usp=drive_link
