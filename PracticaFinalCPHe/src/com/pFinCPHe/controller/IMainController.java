@@ -3,6 +3,7 @@ package com.pFinCPHe.controller;
 import java.util.UUID;
 
 import com.pFinCPHe.model.entities.Car;
+import com.pFinCPHe.model.entities.Outlay;
 import com.pFinCPHe.model.entities.User;
 
 public interface IMainController {
@@ -19,11 +20,14 @@ public interface IMainController {
 	void showAddOutlayView();
 	void showOutlayView();
 	boolean create(Car car);
-	void setCurrentUser(User user);
-	User getCurrentUser();
-	boolean edit(Car car);
-	Car findCarByPlate(String plate) throws Exception;
+	boolean edit(Car carToModify, UUID uuid);
+	Car findCarByPlate(String plate, UUID uuid) throws Exception;
 	boolean addNewOwner(Car modifiedCar);
 	String showCarTable(UUID uuid);
-	boolean delete(Car deletedCar);
+	boolean delete(Car deletedCar, UUID uuid);
+	boolean addOutlay(Outlay outlay, UUID uuid);
+	String showOutlayTable(UUID uuid);
+	
+	void setCurrentUser(User user);
+	User getCurrentUser();
 }

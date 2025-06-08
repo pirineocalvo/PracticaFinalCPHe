@@ -15,6 +15,7 @@ import com.pFinCPHe.model.entities.User;
 
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
+import java.util.UUID;
 
 public class RegisterView extends JPanel {
 
@@ -148,11 +149,12 @@ public class RegisterView extends JPanel {
 				return;
 			}
 
-			User user = new User(username, password, null);
+			User user = new User(username, password,  UUID.randomUUID());
 
 			boolean result = mainController.register(user);
 
 			if (result) {
+				mainController.setCurrentUser(user);
 				JOptionPane.showMessageDialog(null, "¡Registro correcto!",
 						"Registro",
 						JOptionPane.PLAIN_MESSAGE);

@@ -1,39 +1,64 @@
 package com.pFinCPHe.view;
 
 import javax.swing.JPanel;
-
-import com.pFinCPHe.controller.IMainController;
-import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.util.UUID;
+
+import com.pFinCPHe.controller.IMainController;
 
 public class OutlayView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private IMainController mainController;
-	
+	private static IMainController mainController;
+	private static JButton returnButton;
+	private JLabel outlaysLabel;
+
 	public OutlayView() {
 		setBackground(new Color(14, 77, 100));
 		setLayout(null);
 		
-		JButton returnButton = new JButton("VOLVER");
+		returnButton = new JButton("VOLVER");
 		returnButton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		returnButton.setBounds(517, 630, 118, 23);
+		returnButton.setBounds(531, 646, 118, 23);
 		add(returnButton);
+		returnButton.addActionListener(e -> {
+			if (mainController != null) {
+				mainController.showUserView();
+			}
+		});
 		
-		JLabel lblTusGastos = new JLabel("TUS GASTOS");
-		lblTusGastos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTusGastos.setForeground(new Color(163, 217, 165));
-		lblTusGastos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 40));
-		lblTusGastos.setBounds(288, 31, 560, 49);
-		add(lblTusGastos);
-		returnButton.addActionListener(e -> mainController.showUserView());
-
+		outlaysLabel = new JLabel();
+		outlaysLabel.setVerticalAlignment(SwingConstants.TOP);
+		outlaysLabel.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 12));
+		outlaysLabel.setOpaque(true);
+		outlaysLabel.setBackground(Color.WHITE); 
+		outlaysLabel.setBounds(236, 124, 658, 460);
+		add(outlaysLabel);
+		
+		JLabel titleLabel = new JLabel("TUS COCHES");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setForeground(new Color(163, 217, 165));
+		titleLabel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 40));
+		titleLabel.setBounds(293, 22, 560, 49);
+		add(titleLabel);
 	}
 
 	public void setMainController(IMainController mainController) {
-		this.mainController=mainController;
+		OutlayView.mainController = mainController;
+	}
+
+	public void refreshCarList() {
+		if (mainController == null || mainController.getCurrentUser() == null) {
+			outlaysLabel.setText("<html><i>No hay usuario activo.</i></html>");
+			return;
+		}
+		UUID uuid = mainController.getCurrentUser().getUuid();
+		String labelContent = mainController.showOutlayTable(uuid);
+		outlaysLabel.setText("<html>" + labelContent.replace("\n", "<br>") + "</html>");
 	}
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import com.pFinCPHe.model.entities.Car;
+import com.pFinCPHe.model.entities.Outlay;
 
 
 public class CarModel implements ICarModel{
@@ -40,41 +41,48 @@ public class CarModel implements ICarModel{
 	}
 
 	
-	public Car findCarByPlate(String plate) throws Exception {
-		String query = "SELECT brand, plate, yearProduction FROM cars WHERE plate LIKE ?";
-		PreparedStatement ps3 = connection.prepareStatement(query);
+	public Car findCarByPlate(String plate, UUID uuid) throws Exception {
+	    String query = "SELECT BIN_TO_UUID(uuid) as uuid, plate FROM cars_owners WHERE BIN_TO_UUID(uuid) LIKE ? AND plate LIKE ?";
+	    PreparedStatement ps3 = connection.prepareStatement(query);
 
-		ps3.setString(1, plate);
+	    ps3.setString(1, uuid.toString());
+	    ps3.setString(2, plate);
 
-		ResultSet rs = ps3.executeQuery();
-		Car car = null;
-		while (rs.next()) {
-			String brand = rs.getString(1);
-			String carPlate = rs.getString(2);
-			Date yearProduction = rs.getDate(3);
-			if (car == null)
-				car = new Car(brand, carPlate, yearProduction, null);
-			else {
-				throw new Exception("No puede haber dos coches con la matrícula: " + carPlate);
-			}
-		}
-		return car;
+	    ResultSet rs = ps3.executeQuery();
+	    Car car = null;
+	    
+	    while (rs.next()) {
+	        UUID userUuid = UUID.fromString(rs.getString("uuid"));
+	        String carPlate = rs.getString("plate");
+
+	        car = new Car();
+	        car.setUuid(userUuid);
+	        car.setPlate(carPlate);
+	    }
+	    return car;
 	}
 
 	@Override
-	public boolean edit(Car modifiedCar) {
-		String query = "UPDATE cars SET brand = ?, yearProduction = ? WHERE plate LIKE ?";
-		try {
-			PreparedStatement ps4 = connection.prepareStatement(query);
-			ps4.setString(1, modifiedCar.getBrand());
-			ps4.setDate(2, modifiedCar.getYearProduction());
-			ps4.setString(3, modifiedCar.getPlate());
-			ps4.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			return false;
-		}
+	public boolean edit(Car modifiedCar, UUID uuid) {
+	    String query = "UPDATE cars " +
+	                   "JOIN cars_owners ON cars.plate = cars_owners.plate " +
+	                   "SET cars.brand = ?, cars.yearProduction = ? " +
+	                   "WHERE cars_owners.plate = ? AND cars_owners.uuid = UUID_TO_BIN(?);";
+	    try {
+	        PreparedStatement ps = connection.prepareStatement(query);
+	        ps.setString(1, modifiedCar.getBrand());
+	        ps.setDate(2, modifiedCar.getYearProduction());
+	        ps.setString(3, modifiedCar.getPlate());
+	        ps.setString(4, uuid.toString());
+
+	        int rowsAffected = ps.executeUpdate();
+
+	        return rowsAffected > 0;
+	    } catch (SQLException e) {
+	        return false;
+	    }
 	}
+
 
 	@Override
 	public boolean addNewOwner(Car modifiedCar) {
@@ -136,21 +144,107 @@ public class CarModel implements ICarModel{
 		}
 	}
 
-	public boolean delete(Car deletedCar) {
+	public boolean delete(Car deletedCar, UUID uuid) {
 	    try {
-	        String query1 = "DELETE FROM cars_owners WHERE plate = ?";
+	        String query1 = "DELETE FROM cars_owners WHERE plate = ? AND uuid = UUID_TO_BIN(?)";
 	        PreparedStatement ps1 = connection.prepareStatement(query1);
 	        ps1.setString(1, deletedCar.getPlate());
-	        ps1.executeUpdate();
-
-	        String query2 = "DELETE FROM cars WHERE plate = ?";
-	        PreparedStatement ps2 = connection.prepareStatement(query2);
-	        ps2.setString(1, deletedCar.getPlate());
-	        ps2.executeUpdate();
-
-	        return true;
+	        ps1.setString(1, deletedCar.getUuid().toString());
+	        
+	        int rowsAffected = ps1.executeUpdate();
+	        
+	        if(rowsAffected>0) {
+	        	String query2 = "DELETE FROM cars WHERE plate = ?";
+	 	        PreparedStatement ps2 = connection.prepareStatement(query2);
+	 	        ps2.setString(1, deletedCar.getPlate());
+	 	        
+	 	        ps2.executeUpdate();
+	 	        return true;
+	        }
+	        
+	        return false;
 	    } catch (Exception e) {
 	        return false;
+	    }
+	}
+
+	@Override
+	public boolean addOutlay(Outlay outlay, UUID uuid) {
+	    String checkPlateQuery = "SELECT 1 FROM cars_owners WHERE plate = ? AND uuid = UUID_TO_BIN(?)";
+	    String insertQuery = "INSERT INTO outlays (type, kilometers, dateData, finalCost, optionalDescription, plate) VALUES (?, ?, ?, ?, ?, ?)";
+
+	    try {
+	        PreparedStatement checkPs = connection.prepareStatement(checkPlateQuery);
+	        PreparedStatement insertPs = connection.prepareStatement(insertQuery);
+	    
+	        checkPs.setString(1, outlay.getPlate());
+	        checkPs.setString(2, uuid.toString());
+	        
+	        ResultSet rs = checkPs.executeQuery();
+	        if (rs.next()) {
+	        	insertPs.setString(1, outlay.getType() != null ? outlay.getType().toString() : null);
+	 	        insertPs.setDouble(2, outlay.getKilometers());
+	 	        insertPs.setDate(3, outlay.getDateData());
+	 	        insertPs.setDouble(4, outlay.getFinalCost());
+	 	        insertPs.setString(5, outlay.getOptionalDescription());
+	 	        insertPs.setString(6, outlay.getPlate());
+
+	 	        insertPs.executeUpdate();
+	 	        return true;
+	        }
+
+	       return false;
+
+	    } catch (Exception ex) {
+	        return false;
+	    }
+	}
+
+	@Override
+	public String showOutlayTable(UUID uuid) {
+	    StringBuilder result = new StringBuilder();
+
+	    String query = "SELECT outlays.type, outlays.kilometers, outlays.dateData, outlays.finalCost, outlays.optionalDescription, outlays.plate FROM outlays INNER JOIN cars_owners ON outlays.plate = cars_owners.plate WHERE cars_owners.uuid = UUID_TO_BIN(?)";
+
+	    try {
+	    	PreparedStatement ps = connection.prepareStatement(query);
+	        ps.setString(1, uuid.toString());
+	        ResultSet rs = ps.executeQuery();
+
+	        result.append("<table border='1' cellspacing='0' cellpadding='4'>");
+	        result.append("<tr><th>Tipo</th><th>Kilómetros</th><th>Fecha</th><th>Coste</th><th>Descripción</th><th>Matrícula</th></tr>");
+
+	        boolean hasRows = false;
+
+	        while (rs.next()) {
+	            hasRows = true;
+	            String type = rs.getString("type");
+	            double kilometers = rs.getDouble("kilometers");
+	            Date dateData = rs.getDate("dateData");
+	            double finalCost = rs.getDouble("finalCost");
+	            String description = rs.getString("optionalDescription");
+	            String plate = rs.getString("plate");
+	            
+	            result.append("<tr>")
+	                  .append("<td>").append(type).append("</td>")
+	                  .append("<td>").append(kilometers).append("</td>")
+	                  .append("<td>").append(dateData).append("</td>")
+	                  .append("<td>").append(finalCost).append("</td>")
+	                  .append("<td>").append(description).append("</td>")
+	                  .append("<td>").append(plate).append("</td>")
+	                  .append("</tr>");
+	        }
+
+	        result.append("</table>");
+
+	        if (!hasRows) {
+	            return "<i>No tienes gastos registrados</i>";
+	        }
+
+	        return result.toString();
+
+	    } catch (SQLException e) {
+	        return "<b>Error al obtener los gastos.</b>";
 	    }
 	}
 

@@ -24,11 +24,12 @@ public class AuthModel implements IAuthModel {
 	
 	public boolean register(User user) {
 		try {
-			String query = "INSERT INTO users (name, password) value (?, ?)";
+			String query = "INSERT INTO users (name, password, uuid) value (?, ?, UUID_TO_BIN(?))";
 			PreparedStatement ps1 = connection.prepareStatement(query);
 			
 			ps1.setString(1, user.getName());
 			ps1.setString(2, user.getPassword());
+			ps1.setString(3, user.getUuid().toString());
 
 			ps1.executeUpdate();
 		} catch (Exception ex) {

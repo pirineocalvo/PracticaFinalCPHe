@@ -82,21 +82,25 @@ public class EditView extends JPanel {
 		confirmButton.addActionListener(e -> actionPerformed(e));
 		
 		plateField = new JTextField();
+		plateField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		plateField.setColumns(10);
 		plateField.setBounds(472, 168, 452, 36);
 		add(plateField);
 		
 		brandField = new JTextField();
+		brandField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		brandField.setColumns(10);
 		brandField.setBounds(472, 282, 452, 36);
 		add(brandField);
 		
 		yearProductionField = new JTextField();
+		yearProductionField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		yearProductionField.setColumns(10);
 		yearProductionField.setBounds(472, 396, 452, 36);
 		add(yearProductionField);
 		
 		ownersField = new JTextField();
+		ownersField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		ownersField.setColumns(10);
 		ownersField.setBounds(472, 508, 452, 36);
 		add(ownersField);
@@ -123,17 +127,18 @@ public class EditView extends JPanel {
 			UUID uuid= mainController.getCurrentUser().getUuid();
 			
 			
-			if (brand.isBlank() || plate.isBlank() || yearProductionField==null) {
+			if (brand.isBlank() || plate.isBlank() || yearProductionField.getText().isBlank()) {
 				JOptionPane.showMessageDialog(null,
 						"Completa todos los campos",
 						"Editar coche",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
 
 			Car modifiedCar = new Car(brand, plate, yearProduction, uuid);
 
-			boolean result = mainController.edit(modifiedCar);
+			boolean result = mainController.edit(modifiedCar, uuid);
 
 			if (result) {
 				JOptionPane.showMessageDialog(null, "¡Coche editado con éxito!",
@@ -185,9 +190,11 @@ public class EditView extends JPanel {
 			yearProductionField.setText("");
 		} else if(e.getSource() == searchButton) {
 			String plate = plateField.getText();
+			UUID uuid= mainController.getCurrentUser().getUuid();
 			Car foundCar=null;
+			
 			try {
-				foundCar = mainController.findCarByPlate(plate);
+				foundCar = mainController.findCarByPlate(plate, uuid);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

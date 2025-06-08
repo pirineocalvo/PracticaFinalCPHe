@@ -16,6 +16,7 @@ public class Car {
 		this.yearProduction = yearProduction;
 		this.uuid = uuid;
 	}
+	public Car() {}
 
 	public String getBrand() {
 		return brand;

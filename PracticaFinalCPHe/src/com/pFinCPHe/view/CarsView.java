@@ -40,12 +40,12 @@ public class CarsView extends JPanel {
 		carsLabel.setBounds(236, 124, 658, 460);
 		add(carsLabel);
 		
-		JLabel lblTusCoches = new JLabel("TUS COCHES");
-		lblTusCoches.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTusCoches.setForeground(new Color(163, 217, 165));
-		lblTusCoches.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 40));
-		lblTusCoches.setBounds(293, 22, 560, 49);
-		add(lblTusCoches);
+		JLabel titleLabel = new JLabel("TUS COCHES");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setForeground(new Color(163, 217, 165));
+		titleLabel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 40));
+		titleLabel.setBounds(293, 22, 560, 49);
+		add(titleLabel);
 	}
 
 	public void setMainController(IMainController mainController) {

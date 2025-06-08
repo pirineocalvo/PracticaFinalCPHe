@@ -11,6 +11,7 @@ import com.pFinCPHe.model.CarModel;
 import com.pFinCPHe.model.IAuthModel;
 import com.pFinCPHe.model.ICarModel;
 import com.pFinCPHe.model.entities.Car;
+import com.pFinCPHe.model.entities.Outlay;
 import com.pFinCPHe.model.entities.User;
 import com.pFinCPHe.view.AddOutlayView;
 import com.pFinCPHe.view.CarsView;
@@ -37,6 +38,7 @@ public class MainController implements IMainController{
 	private AddOutlayView addOutlayView;
 	private OutlayView outlayView;
 	private ICarModel carModel;
+	
 	private User currentUser;
 
 	
@@ -107,6 +109,7 @@ public class MainController implements IMainController{
 	}
 	
 	public void showOutlayView() {
+		outlayView.refreshCarList();
 		mainView.setContentPanel(outlayView);
 	}
 	
@@ -122,6 +125,7 @@ public class MainController implements IMainController{
 	
 	public boolean login(User user) {
 		boolean result = this.authModel.login(user);
+		setCurrentUser(user);
 		return result;
 	}
 	
@@ -130,33 +134,42 @@ public class MainController implements IMainController{
 		return result;
 	}
 	
-	public boolean edit(Car modifiedCar) {
-		boolean result = this.carModel.edit(modifiedCar);
+	public boolean edit(Car modifiedCar, UUID uuid) {
+		boolean result = this.carModel.edit(modifiedCar, uuid);
 		return result;
 	}
 	
-	public boolean delete(Car deletedCar) {
-		boolean result = this.carModel.delete(deletedCar);
+	public boolean delete(Car deletedCar, UUID uuid) {
+		boolean result = this.carModel.delete(deletedCar, uuid);
 		return result;
 	}
 	
-	public Car findCarByPlate(String plate) throws Exception {
-		return this.carModel.findCarByPlate(plate);
+	public Car findCarByPlate(String plate, UUID uuid) throws Exception {
+		return this.carModel.findCarByPlate(plate, uuid);
 	}
 	
 	public boolean addNewOwner(Car modifiedCar) {
 		return this.carModel.addNewOwner(modifiedCar);
 	}
 	
-	public void setCurrentUser(User user) {
-	    this.currentUser = user;
+	public String showCarTable(UUID uuid) {
+		return this.carModel.showCarTable(uuid);
+	}
+
+	@Override
+	public boolean addOutlay(Outlay outlay, UUID uuid) {
+		return this.carModel.addOutlay(outlay, uuid);
+	}
+	
+	public String showOutlayTable(UUID uuid) {
+		return this.carModel.showOutlayTable(uuid);
+	}
+	
+	public void setCurrentUser(User currentUser) {
+	    this.currentUser = currentUser;
 	}
 
 	public User getCurrentUser() {
 	    return currentUser;
-	}
-	
-	public String showCarTable(UUID uuid) {
-		return this.carModel.showCarTable(uuid);
 	}
 }

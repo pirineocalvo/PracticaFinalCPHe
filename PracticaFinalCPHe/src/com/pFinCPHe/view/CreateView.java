@@ -60,16 +60,19 @@ public class CreateView extends JPanel {
 		add(yearLabel);
 		
 		yearField = new JTextField();
+		yearField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		yearField.setBounds(401, 391, 452, 36);
 		add(yearField);
 		yearField.setColumns(10);
 		
 		plateField = new JTextField();
+		plateField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		plateField.setColumns(10);
 		plateField.setBounds(401, 279, 452, 36);
 		add(plateField);
 		
 		brandField = new JTextField();
+		brandField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		brandField.setColumns(10);
 		brandField.setBounds(401, 168, 452, 36);
 		add(brandField);
@@ -95,7 +98,7 @@ public class CreateView extends JPanel {
 			Date yearProduction = Date.valueOf(yearField.getText()+"-01-01");
 			UUID uuid= mainController.getCurrentUser().getUuid();
 			
-			if (brand.isBlank() || plate.isBlank() || yearField==null) {
+			if (brand.isBlank() || plate.isBlank() || yearField.getText().isBlank()) {
 				JOptionPane.showMessageDialog(null,
 						"Completa todos los campos",
 						"Crear coche",
