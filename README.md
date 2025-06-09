@@ -5,7 +5,7 @@
 - Ahora comprueba que al añadir/editar tengas jasypt esté en Modulepath y mysql-connector en Classpath
 - Después de configurar el Java Build Path, clickar en Apply and close
 ![image](https://github.com/user-attachments/assets/ac649456-37af-49b5-9704-c19e69600a27)
-- Finalmente, despliega el proyecto en el Proyect Explorer, localiza el Main.java, clic derecho sobre él y Run As-> Java Application
+- Finalmente, despliega el proyecto en el Project Explorer, localiza el Main.java, clic derecho sobre él y Run As-> Java Application
 ---
 
 ### SECCIÓN 2: PAQUETES NECESARIOS
