@@ -1,2 +1,6 @@
-# Eclipse IDE: Archivos de configuració
+# Eclipse IDE: Archivos de configuracion
 */.env
+*/.classpath
+*/.project
+*/bin
+*/.settings
