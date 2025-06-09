@@ -27,7 +27,12 @@ public interface IMainController {
 	boolean delete(Car deletedCar, UUID uuid);
 	boolean addOutlay(Outlay outlay, UUID uuid);
 	String showOutlayTable(UUID uuid);
+	public void filterByYear(String year);
+	public void filterByDate(String dateFrom, String dateTo);
+	public void filterByKm(String kmMin, String kmMax);
+
 	
 	void setCurrentUser(User user);
 	User getCurrentUser();
+	
 }

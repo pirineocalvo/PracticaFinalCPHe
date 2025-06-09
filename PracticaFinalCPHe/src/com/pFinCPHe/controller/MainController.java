@@ -109,7 +109,7 @@ public class MainController implements IMainController{
 	}
 	
 	public void showOutlayView() {
-		outlayView.refreshCarList();
+		outlayView.refreshOutlayList();
 		mainView.setContentPanel(outlayView);
 	}
 	
@@ -164,6 +164,28 @@ public class MainController implements IMainController{
 	public String showOutlayTable(UUID uuid) {
 		return this.carModel.showOutlayTable(uuid);
 	}
+	
+	public void filterByYear(String year) {
+		if (currentUser == null) return;
+		UUID uuid = currentUser.getUuid();
+		String result = carModel.filterByYear(uuid, year);
+		outlayView.showfilter(result);
+	}
+
+	public void filterByDate(String dateFrom, String dateTo) {
+		if (currentUser == null) return;
+		UUID uuid = currentUser.getUuid();
+		String result = carModel.filterByDate(uuid, dateFrom, dateTo);
+		outlayView.showfilter(result);
+	}
+
+	public void filterByKm(String kmMin, String kmMax) {
+		if (currentUser == null) return;
+		UUID uuid = currentUser.getUuid();
+		String result = carModel.filterByKm(uuid, kmMin, kmMax);
+		outlayView.showfilter(result);
+	}
+
 	
 	public void setCurrentUser(User currentUser) {
 	    this.currentUser = currentUser;

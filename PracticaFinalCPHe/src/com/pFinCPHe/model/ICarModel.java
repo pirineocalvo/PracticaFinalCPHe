@@ -14,4 +14,7 @@ public interface ICarModel {
 	boolean delete(Car deletedCar, UUID uuid);
 	boolean addOutlay(Outlay outlay, UUID uuid);
 	String showOutlayTable(UUID uuid);
+	String filterByYear(UUID uuid, String year);
+	String filterByDate(UUID uuid, String dateFrom, String dateTo);
+	String filterByKm(UUID uuid, String kmMin, String kmMax);
 }

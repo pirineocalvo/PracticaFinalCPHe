@@ -39,7 +39,6 @@ SELECT BIN_TO_UUID(uuid) as uuid, plate FROM cars_owners;
 SELECT * FROM cars;
 SELECT * FROM outlays;
 SET SQL_SAFE_UPDATES = 0;
-SELECT text_to_binary(uuid) FROM users;
 SELECT name, password, BIN_TO_UUID(uuid) AS uuid FROM users WHERE uuid = UUID_TO_BIN('15894181-3d45-11f0-b4aa-862ccfb04448');
 SELECT cars.brand, cars_owners.plate, cars.yearProduction, BIN_TO_UUID(cars_owners.uuid) as uuid FROM cars INNER JOIN cars_owners ON cars.plate = cars_owners.plate WHERE cars.uuid = UUID_TO_BIN('15894181-3d45-11f0-b4aa-862ccfb04448');
 SELECT * FROM cars_owners;

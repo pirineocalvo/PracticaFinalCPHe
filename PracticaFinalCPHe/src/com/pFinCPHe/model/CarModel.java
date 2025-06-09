@@ -248,6 +248,110 @@ public class CarModel implements ICarModel{
 	    }
 	}
 
+	public String filterByYear(UUID uuid, String year) {
+	    StringBuilder result = new StringBuilder();
+
+	    String query = "SELECT outlays.type, outlays.kilometers, outlays.dateData, outlays.finalCost, outlays.optionalDescription, outlays.plate FROM outlays INNER JOIN cars_owners ON outlays.plate = cars_owners.plate WHERE cars_owners.uuid = UUID_TO_BIN(?) AND YEAR(outlays.dateData) = ?";
+
+	    try (PreparedStatement ps = connection.prepareStatement(query)) {
+	        ps.setString(1, uuid.toString());
+	        ps.setInt(2, Integer.parseInt(year));
+	        ResultSet rs = ps.executeQuery();
+
+	        result.append("<table border='1' cellspacing='0' cellpadding='4'>");
+	        result.append("<tr><th>Tipo</th><th>Kilómetros</th><th>Fecha</th><th>Coste</th><th>Descripción</th><th>Matrícula</th></tr>");
+
+	        boolean hasRows = false;
+	        while (rs.next()) {
+	            hasRows = true;
+	            result.append("<tr>")
+	                  .append("<td>").append(rs.getString("type")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("kilometers")).append("</td>")
+	                  .append("<td>").append(rs.getDate("dateData")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("finalCost")).append("</td>")
+	                  .append("<td>").append(rs.getString("optionalDescription")).append("</td>")
+	                  .append("<td>").append(rs.getString("plate")).append("</td>")
+	                  .append("</tr>");
+	        }
+
+	        result.append("</table>");
+	        return hasRows ? result.toString() : "<i>No hay gastos registrados para ese año.</i>";
+	    } catch (SQLException | NumberFormatException e) {
+	        return "<b>Error al filtrar por año.</b>";
+	    }
+	}
 	
-	
+	public String filterByDate(UUID uuid, String dateFrom, String dateTo) {
+	    StringBuilder result = new StringBuilder();
+
+	    String query = "SELECT outlays.type, outlays.kilometers, outlays.dateData, outlays.finalCost, outlays.optionalDescription, outlays.plate FROM outlays INNER JOIN cars_owners ON outlays.plate = cars_owners.plate WHERE cars_owners.uuid = UUID_TO_BIN(?) AND outlays.dateData BETWEEN ? AND ?";
+
+	    try (PreparedStatement ps = connection.prepareStatement(query)) {
+	        ps.setString(1, uuid.toString());
+	        ps.setString(2, dateFrom.isEmpty() ? "0000-01-01" : dateFrom);
+	        ps.setString(3, dateTo.isEmpty() ? "9999-12-31" : dateTo);
+	        ResultSet rs = ps.executeQuery();
+
+	        result.append("<table border='1' cellspacing='0' cellpadding='4'>");
+	        result.append("<tr><th>Tipo</th><th>Kilómetros</th><th>Fecha</th><th>Coste</th><th>Descripción</th><th>Matrícula</th></tr>");
+
+	        boolean hasRows = false;
+	        while (rs.next()) {
+	            hasRows = true;
+	            result.append("<tr>")
+	                  .append("<td>").append(rs.getString("type")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("kilometers")).append("</td>")
+	                  .append("<td>").append(rs.getDate("dateData")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("finalCost")).append("</td>")
+	                  .append("<td>").append(rs.getString("optionalDescription")).append("</td>")
+	                  .append("<td>").append(rs.getString("plate")).append("</td>")
+	                  .append("</tr>");
+	        }
+
+	        result.append("</table>");
+	        return hasRows ? result.toString() : "<i>No hay gastos registrados en ese rango de fechas.</i>";
+	    } catch (SQLException e) {
+	        return "<b>Error al filtrar por fecha.</b>";
+	    }
+	}
+
+	public String filterByKm(UUID uuid, String kmMin, String kmMax) {
+	    StringBuilder result = new StringBuilder();
+
+	    String query = "SELECT outlays.type, outlays.kilometers, outlays.dateData, outlays.finalCost, outlays.optionalDescription, outlays.plate FROM outlays INNER JOIN cars_owners ON outlays.plate = cars_owners.plate WHERE cars_owners.uuid = UUID_TO_BIN(?) AND outlays.kilometers BETWEEN ? AND ?";
+
+	    try (PreparedStatement ps = connection.prepareStatement(query)) {
+	        ps.setString(1, uuid.toString());
+
+	        double min = kmMin.isEmpty() ? 0 : Double.parseDouble(kmMin);
+	        double max = kmMax.isEmpty() ? Double.MAX_VALUE : Double.parseDouble(kmMax);
+
+	        ps.setDouble(2, min);
+	        ps.setDouble(3, max);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        result.append("<table border='1' cellspacing='0' cellpadding='4'>");
+	        result.append("<tr><th>Tipo</th><th>Kilómetros</th><th>Fecha</th><th>Coste</th><th>Descripción</th><th>Matrícula</th></tr>");
+
+	        boolean hasRows = false;
+	        while (rs.next()) {
+	            hasRows = true;
+	            result.append("<tr>")
+	                  .append("<td>").append(rs.getString("type")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("kilometers")).append("</td>")
+	                  .append("<td>").append(rs.getDate("dateData")).append("</td>")
+	                  .append("<td>").append(rs.getDouble("finalCost")).append("</td>")
+	                  .append("<td>").append(rs.getString("optionalDescription")).append("</td>")
+	                  .append("<td>").append(rs.getString("plate")).append("</td>")
+	                  .append("</tr>");
+	        }
+
+	        result.append("</table>");
+	        return hasRows ? result.toString() : "<i>No hay gastos registrados en ese rango de kilómetros.</i>";
+	    } catch (SQLException | NumberFormatException e) {
+	        return "<b>Error al filtrar por kilometraje.</b>";
+	    }
+	}
+
 }
