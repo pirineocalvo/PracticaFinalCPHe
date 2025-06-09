@@ -1,5 +1,6 @@
 ### SECCIÓN 1: EJECUCIÓN DEL PROGRAMA EN ECLIPSE
 - git clone https://github.com/pirineocalvo/PracticaFinalCPHe.git
+- Antes de abrir el proyecto configura el .env (SECCIÓN 4).
 - Abrir eclipse-> File-> Open Projects from File System-> Seleccionar la carpeta del proyecto
 - Clic derecho sobre el proyecto en el Project Explorer de Eclipse-> Properties-> Java Build Path-> Aquí añadir los paquetes en rojo dándole a Edit y buscándolo en tu sistema. En caso de que no aparezcan, ir a la siguiente sección 2 para descargarlos.
 - Ahora comprueba que al añadir/editar tengas jasypt esté en Modulepath y mysql-connector en Classpath
