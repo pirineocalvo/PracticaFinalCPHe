@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `concesionario`;
-CREATE DATABASE `concesionario` CHARACTER SET = 'latin1';
-USE `concesionario`;
+DROP DATABASE IF EXISTS `PracticaFinalCPHe`;
+CREATE DATABASE  `PracticaFinalCPHe` CHARACTER SET = 'latin1';
+USE  `PracticaFinalCPHe`;
 
 CREATE TABLE `users` (
     name VARCHAR(15) UNIQUE,
