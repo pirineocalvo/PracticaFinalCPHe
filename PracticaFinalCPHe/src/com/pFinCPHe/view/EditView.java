@@ -123,7 +123,18 @@ public class EditView extends JPanel {
 		if (e.getSource() == confirmButton) {
 			String brand = brandField.getText();
 			String plate = plateField.getText();
-			Date yearProduction = Date.valueOf(yearProductionField.getText()+"-01-01");
+			
+			Date yearProduction = null;
+			try {
+				yearProduction = Date.valueOf(yearProductionField.getText()+"-01-01");
+			}catch(IllegalArgumentException ex) {
+				JOptionPane.showMessageDialog(null,
+						"Año no válido (AAAA)",
+						"Editar coche",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
 			UUID uuid= mainController.getCurrentUser().getUuid();
 			
 			

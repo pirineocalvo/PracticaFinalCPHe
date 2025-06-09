@@ -7,13 +7,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-
 import javax.swing.SwingConstants;
 
 import com.pFinCPHe.controller.IMainController;
 import com.pFinCPHe.model.entities.User;
 
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
+
 import java.awt.event.ActionEvent;
 import java.util.UUID;
 
@@ -23,10 +24,10 @@ public class RegisterView extends JPanel {
 	private static IMainController mainController;
 	private JPanel registerPanel;
 	private static JTextField userField;
-	private static JTextField passwordField;
+	private static JPasswordField passwordField;           
+	private static JPasswordField passwordConfirmField;    
 	private static JButton submitButton;
 	private static JButton cancelButton;
-	private static JTextField passwordConfirmField;
 	private JLabel compulsaryLabel1;
 	private JLabel compulsaryLabel2;
 	private JLabel compulsaryLabel3;
@@ -65,7 +66,7 @@ public class RegisterView extends JPanel {
 		add(userField);
 		userField.setColumns(10);
 		
-		passwordField = new JTextField("");
+		passwordField = new JPasswordField("");  // Usamos JPasswordField
 		passwordField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordField.setColumns(10);
 		passwordField.setBounds(447, 255, 369, 39);
@@ -90,7 +91,7 @@ public class RegisterView extends JPanel {
 		confirmPasswordLabel.setBounds(213, 331, 263, 54);
 		add(confirmPasswordLabel);
 		
-		passwordConfirmField = new JTextField("");
+		passwordConfirmField = new JPasswordField("");  // Usamos JPasswordField
 		passwordConfirmField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordConfirmField.setColumns(10);
 		passwordConfirmField.setBounds(447, 335, 369, 39);
@@ -124,14 +125,13 @@ public class RegisterView extends JPanel {
 		userInformation.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 12));
 		userInformation.setBounds(854, 175, 284, 112);
 		add(userInformation);
-		
 	}
 	
 	public static void actionPerformed(ActionEvent e){
 		if (e.getSource() == submitButton) {
 			String username = userField.getText();
-			String password = passwordField.getText();
-			String passwordConfirm = passwordConfirmField.getText();
+			String password = new String(passwordField.getPassword()); // Convertimos de char[] a String
+			String passwordConfirm = new String(passwordConfirmField.getPassword());
 
 			if (username.isBlank() || password.isBlank()) {
 				JOptionPane.showMessageDialog(null,
@@ -149,7 +149,7 @@ public class RegisterView extends JPanel {
 				return;
 			}
 
-			User user = new User(username, password,  UUID.randomUUID());
+			User user = new User(username, password, UUID.randomUUID());
 
 			boolean result = mainController.register(user);
 
@@ -181,8 +181,7 @@ public class RegisterView extends JPanel {
 		}
 	}
 
-	
 	public void setMainController(IMainController mainController) {
-		RegisterView.mainController=mainController;
+		RegisterView.mainController = mainController;
 	}
 }

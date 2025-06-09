@@ -149,7 +149,7 @@ public class CarModel implements ICarModel{
 	        String query1 = "DELETE FROM cars_owners WHERE plate = ? AND uuid = UUID_TO_BIN(?)";
 	        PreparedStatement ps1 = connection.prepareStatement(query1);
 	        ps1.setString(1, deletedCar.getPlate());
-	        ps1.setString(1, deletedCar.getUuid().toString());
+	        ps1.setString(2, deletedCar.getUuid().toString());
 	        
 	        int rowsAffected = ps1.executeUpdate();
 	        

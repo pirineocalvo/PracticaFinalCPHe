@@ -8,18 +8,18 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 import com.pFinCPHe.controller.IMainController;
 import com.pFinCPHe.model.entities.User;
-
-import javax.swing.JButton;
 
 public class LoginView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static IMainController mainController;
 	private static JTextField userNameField;
-	private static JTextField passwordField;
+	private static JPasswordField passwordField;  
 	private static JButton confirmButton;
 	private static JButton cancelButton;
 
@@ -66,7 +66,7 @@ public class LoginView extends JPanel {
 		userNameField.setBounds(465, 258, 369, 39);
 		add(userNameField);
 
-		passwordField = new JTextField("");
+		passwordField = new JPasswordField(""); 
 		passwordField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		passwordField.setColumns(10);
 		passwordField.setBounds(465, 367, 369, 39);
@@ -76,7 +76,7 @@ public class LoginView extends JPanel {
 	public static void actionPerformed(ActionEvent e) {
 		if (e.getSource() == confirmButton) {
 			String username = userNameField.getText();
-			String password = passwordField.getText();
+			String password = new String(passwordField.getPassword());
 
 			if (username.isBlank() || password.isBlank()) {
 				JOptionPane.showMessageDialog(null,
