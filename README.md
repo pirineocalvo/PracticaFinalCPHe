@@ -31,12 +31,15 @@ Puede ocurrir que Eclipse tenga la codicifación de caracteres errónea y no det
 - Asegúrate que en el Explorador de archivos muestra extensiones: Ver-> Mostrar-> Extensiones de nombre de archivo
 - Explorador de archivos-> Abre la carpeta del proyecto PracticaFinalCPHe-> Clic derecho sobre cualquier parte vacía de la carpeta-> Nuevo-> Documento de texto.txt-> Cambia (incluyendo la extensión) el nombre a ".env".
 ![image](https://github.com/user-attachments/assets/3c34209f-072d-47ae-b7b9-e44700abdb9f)
+
 _Rellenar .env_
-....
-  DB_HOST=
+<pre>
+   DB_HOST=
   DB_PORT=
   DB_USERNAME=
   DB_PASSWORD=
   DB_DATABASE=PracticaFinalCPHe
-.... 
+</pre>
+ 
+
 
