@@ -13,6 +13,7 @@
 _Opción 1, necesario cuenta google drive_
 Este link te redirecciona a un drive con las versiones de jasypt y mysql-connector exactas para el proyecto. Se encuentran en la carpeta libs.
 https://drive.google.com/drive/folders/13huduxYea_ZIueQ5Bcayc0RxYvqvjFxR?usp=drive_link
+
 _Opción 2, pinchar en el .jar_
 - JASYPT: 1.9.3 --> https://mvnrepository.com/artifact/org.jasypt/jasypt/1.9.3
 - MYSQL-CONNECTOR: 9.2.0 --> https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/9.2.0
