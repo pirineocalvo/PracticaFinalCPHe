@@ -35,10 +35,10 @@ Puede ocurrir que Eclipse tenga la codicifación de caracteres errónea y no det
 _Rellenar .env_
 <pre>
    DB_HOST=
-  DB_PORT=
-  DB_USERNAME=
-  DB_PASSWORD=
-  DB_DATABASE=PracticaFinalCPHe
+   DB_PORT=
+   DB_USERNAME=
+   DB_PASSWORD=
+   DB_DATABASE=PracticaFinalCPHe
 </pre>
  
 
