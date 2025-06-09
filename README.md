@@ -6,6 +6,7 @@
 - Después de configurar el Java Build Path, clickar en Apply and close
 ![image](https://github.com/user-attachments/assets/ac649456-37af-49b5-9704-c19e69600a27)
 - Finalmente, despliega el proyecto en el Proyect Explorer, localiza el Main.java, clic derecho sobre él y Run As-> Java Application
+---
 
 ### SECCIÓN 2: PAQUETES NECESARIOS
 _Opción 1, necesario cuenta google drive_
@@ -15,12 +16,27 @@ _Opción 2, pinchar en el .jar_
 - JASYPT: 1.9.3 --> https://mvnrepository.com/artifact/org.jasypt/jasypt/1.9.3
 - MYSQL-CONNECTOR: 9.2.0 --> https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/9.2.0
 ![image](https://github.com/user-attachments/assets/7ab4df98-a9e6-4c9b-bdb0-844774c04271)
+---
 
-
-### SECCIÓN 3: POSIBLE PROBLEMA
+### SECCIÓN 3: POSIBLE PROBLEMA DE CODIFICACIÓN
 Puede ocurrir que Eclipse tenga la codicifación de caracteres errónea y no detecte bien las tildes o la ñ, entre otros. Te explico los pasos a seguir: 
 - Mete el proyecto como se comenta anteriormente.
 - Clic derecho sobre el proyecto-> Properties-> Resource-> En la parte de Text file encofing-> Marca en azul Other-> UTF-8
+- Finalmente, Apply and close
 ![image](https://github.com/user-attachments/assets/59497365-41b5-4f68-80c0-c0e562016170)
 
+---
+### SECCIÓN 4: PROBLEMA .env Y CONEXIÓN BBDD
+- El proyecto subido en este repositorio tiene el script concesionario.sql con la bbdd PracticaFinalCPHe, pero no el archivo .env necesario para la ejecución debes añadirlo tú.
+- Asegúrate que en el Explorador de archivos muestra extensiones: Ver-> Mostrar-> Extensiones de nombre de archivo
+- Explorador de archivos-> Abre la carpeta del proyecto PracticaFinalCPHe-> Clic derecho sobre cualquier parte vacía de la carpeta-> Nuevo-> Documento de texto.txt-> Cambia (incluyendo la extensión) el nombre a ".env".
+![image](https://github.com/user-attachments/assets/3c34209f-072d-47ae-b7b9-e44700abdb9f)
+_Rellenar .env_
+....
+  DB_HOST=
+  DB_PORT=
+  DB_USERNAME=
+  DB_PASSWORD=
+  DB_DATABASE=PracticaFinalCPHe
+.... 
 
