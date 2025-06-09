@@ -10,7 +10,8 @@
 ---
 
 ### SECCIÓN 2: PAQUETES NECESARIOS
-- La versión jdk, con eclipse instalado de la última versión dejando por defecto la que viene funciona, también con la 17, 21 y 23. 
+- La versión jdk, con eclipse instalado de la última versión dejando por defecto la que viene funciona, también con la 17, 21 y 23.
+
 _Opción 1, necesario cuenta google drive_
 Este link te redirecciona a un drive con las versiones de jasypt y mysql-connector exactas para el proyecto. Se encuentran en la carpeta libs.
 https://drive.google.com/drive/folders/13huduxYea_ZIueQ5Bcayc0RxYvqvjFxR?usp=drive_link
